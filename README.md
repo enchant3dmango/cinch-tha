@@ -28,7 +28,7 @@ I want to build an API for a product rental service. The API should allow users 
 
 **AttributeValue**
 - Actual values for each attribute (e.g., Size = "44", Color = "Black").
-- Linked to both **Attribute** and **Product** (for redundancy/query flexibility).
+- Linked to both **Attribute** and **Product** (for query flexibility).
 
 **Region**
 - Represents the geographic region where a product can be rented.
