@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class AuditMixin(BaseModel):
@@ -24,8 +24,7 @@ class AttributeValueCreate(AttributeValueBase):
 class AttributeValue(AttributeValueBase, AuditMixin):
     id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class AttributeBase(BaseModel):
@@ -40,8 +39,7 @@ class Attribute(AttributeBase, AuditMixin):
     id: int
     values: List[AttributeValue] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class RentalPeriodBase(BaseModel):
@@ -56,8 +54,7 @@ class RentalPeriodCreate(RentalPeriodBase):
 class RentalPeriod(RentalPeriodBase, AuditMixin):
     id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class RegionBase(BaseModel):
@@ -72,8 +69,7 @@ class RegionCreate(RegionBase):
 class Region(RegionBase, AuditMixin):
     id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ProductPricingBase(BaseModel):
@@ -92,8 +88,7 @@ class ProductPricing(ProductPricingBase, AuditMixin):
     rental_period: RentalPeriod
     region: Region
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ProductBase(BaseModel):
@@ -112,8 +107,7 @@ class Product(ProductBase, AuditMixin):
     attributes: List[Attribute] = []
     pricing: List[ProductPricing] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # Output schema for product detail
