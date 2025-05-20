@@ -1,7 +1,10 @@
+from typing import List, Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
+
+from app.crud import get_filtered_products, get_product_detail
 from app.database import SessionLocal
-from app.crud import get_product_detail
 from app.schemas import ProductDetail
 
 router = APIRouter()
@@ -35,3 +38,12 @@ def read_product(
     if not product:
         raise HTTPException(status_code=404, detail="Product not found!")
     return product
+
+
+@router.get("/products", response_model=List[ProductDetail])
+def list_products(
+    region: Optional[str] = None,
+    rental_months: Optional[int] = None,
+    db: Session = Depends(get_db)
+):
+    return get_filtered_products(db, region=region, rental_months=rental_months)
