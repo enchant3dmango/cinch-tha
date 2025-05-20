@@ -108,7 +108,7 @@ Check the generated tables in your database via database GUI or via CLI.
 3. Open the created database, then execute the [populate.sql](populate.sql) query to populate the dummy data.
 
 
-#### Test the application
+#### Test the Application
 1. Start the application.
     ```sh
     uvicorn app.main:app --reload
@@ -212,7 +212,7 @@ Check the generated tables in your database via database GUI or via CLI.
     ]
     ```
 
-#### Run The Unit Tests
+#### Run the Unit Tests
 Just execute the following CLI.
 ```sh
 pytest tests/test_products.py
