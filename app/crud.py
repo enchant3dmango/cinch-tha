@@ -3,7 +3,14 @@ from collections import defaultdict
 from app import models
 
 
-def get_product_detail(db: Session, product_id: int):
+def get_product_detail(
+    db: Session,
+    product_id: int,
+    attribute_limit: int = 10,
+    attribute_offset: int = 0,
+    pricing_limit: int = 10,
+    pricing_offset: int = 0
+):
     product = db.query(models.Product).options(
         joinedload(models.Product.attributes).joinedload(models.Attribute.values),
         joinedload(models.Product.pricing).joinedload(models.ProductPricing.region),
@@ -13,11 +20,13 @@ def get_product_detail(db: Session, product_id: int):
     if not product:
         return None
 
-    # Group attribute values under their attribute
+    # Paginated attributes
+    paginated_attributes = product.attributes[attribute_offset: attribute_offset + attribute_limit]
+
     attribute_map = defaultdict(list)
     attribute_values_map = defaultdict(list)
 
-    for a in product.attributes:
+    for a in paginated_attributes:
         for av in a.values:
             attribute_values_map[a.id].append({
                 "id": av.id,
@@ -34,13 +43,16 @@ def get_product_detail(db: Session, product_id: int):
         for attribute_id in attribute_map
     ]
 
+    # Paginated pricing
+    paginated_pricing = product.pricing[pricing_offset: pricing_offset + pricing_limit]
+
     pricing = [
         {
             "region": price.region.name,
             "rental_period": price.rental_period.duration_in_months,
             "final_price": price.final_price
         }
-        for price in product.pricing
+        for price in paginated_pricing
     ]
 
     return {
