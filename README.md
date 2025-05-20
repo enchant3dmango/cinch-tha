@@ -108,7 +108,7 @@ Check the generated tables in your database via database GUI or via CLI.
 3. Open the created database, then execute the [populate.sql](populate.sql) query to populate the dummy data.
 
 
-#### Testing The API
+#### Test the application
 1. Start the application.
     ```sh
     uvicorn app.main:app --reload
@@ -211,5 +211,23 @@ Check the generated tables in your database via database GUI or via CLI.
         }
     ]
     ```
+
+#### Run The Unit Tests
+Just execute the following CLI.
+```sh
+pytest tests/test_products.py
+```
+The following is the expected result.
+```sh
+=============================================================================== test session starts ===============================================================================
+platform darwin -- Python 3.11.11, pytest-8.3.5, pluggy-1.6.0
+rootdir: /Users/enchant3dmango/Documents/Personal/Repositories/cinch-tha
+plugins: anyio-4.9.0
+collected 5 items
+
+tests/test_products.py .....                                                                                                                                                [100%]
+
+================================================================================ 5 passed in 0.43s ================================================================================
+```
 
 Akh, there you go!
