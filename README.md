@@ -45,7 +45,7 @@ I want to build an API for a product rental service. The API should allow users 
 
 ### Database Migrations
 
-Check in #setup (alembic)
+Check in [Migrations](#migrations).
 
 ## Setup & Installation
 
