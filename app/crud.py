@@ -74,7 +74,9 @@ def get_product_detail(
 def get_filtered_products(
     db: Session,
     region: Optional[str] = None,
-    rental_months: Optional[int] = None
+    rental_months: Optional[int] = None,
+    limit: int = 10,
+    offset: int = 0
 ):
     query = db.query(models.Product).options(
         joinedload(models.Product.attributes).joinedload(models.Attribute.values),
@@ -93,7 +95,10 @@ def get_filtered_products(
                 models.RentalPeriod.duration_in_months == rental_months
             )
 
-    products = query.all()
+    products = query.offset(offset).limit(limit).all()
+
+    if not products:
+        return None
 
     result = []
     for product in products:

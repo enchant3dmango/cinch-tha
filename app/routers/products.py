@@ -44,6 +44,17 @@ def read_product(
 def list_products(
     region: Optional[str] = None,
     rental_months: Optional[int] = None,
+    limit: int = Query(10, ge=0),
+    offset: int = Query(0, ge=0),
     db: Session = Depends(get_db)
 ):
-    return get_filtered_products(db, region=region, rental_months=rental_months)
+    filtered_products = get_filtered_products(
+        db,
+        region=region,
+        rental_months=rental_months,
+        limit=limit,
+        offset=offset
+    )
+    if not filtered_products:
+        raise HTTPException(status_code=404, detail="No products found!")
+    return filtered_products
